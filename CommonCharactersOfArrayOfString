@@ -1,0 +1,54 @@
+class Solution2 {
+public:
+    int commonCharacter(vector<string> list) {
+        if (list.size()==0) {
+            return 0;
+        }
+        unordered_set<char> s;
+        for (int i=0; i<list[0].size(); ++i) {
+            s.insert(list[0][i]);
+        }
+        int result = 0;
+        for (int i = 0; i < list[0].size(); ++i) {
+            for (int j = 1; j < list.size() ; ++j) {
+                if (list[j].find(list[0][i])<=0) {
+                    s.erase(list[0][i]);
+                }
+            }
+        }
+        return (int)s.size();
+    }
+};
+
+//method 2
+public int getNumOfCommonChars(String[] inputs) {
+		// Return 0 if null / empty input or only one string is provided
+		if(inputs == null || inputs.length < 2) {
+			return 0;
+		} else {
+			//create an int array to hold # times character appears 
+			int[] charCounts = new int[256];
+			for(String input : inputs) {
+				Set<Character> uniqueCharSet = new HashSet<Character>();
+				for(int i=0; i < input.length(); i++) {
+					char ch = input.charAt(i);
+					if (!uniqueCharSet.contains(ch)) {
+						uniqueCharSet.add(ch);
+						charCounts[(int) ch] += 1;
+					}
+				}	
+			}
+		
+			int commonCharCount = 0;
+			for (int i=0; i < 256; i++) {
+				if (charCounts[i] == inputs.length()) {
+					commonCharCount++;
+				}
+			}
+			
+			return commonCharCount;
+		}
+	}
+	
+	//method3
+	
