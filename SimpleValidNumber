@@ -1,0 +1,49 @@
+class Solution {
+public:
+	bool isNumber(const char *s) {
+        string current = s;
+        //remove the leading and trailing 0s and +- at the beginning
+        int i = 0;
+        while (current[i] ==' ') {
+            ++i;
+        }
+       
+        if (i < current.length() && (current[i]=='+' || current[i]=='-')) {
+            ++i;
+        }
+                //if it only contains "" or  '+' or '-', it is not valid
+        if (i >= current.length()) {
+            return false;
+        }
+        int j  = (int)current.length()-1;
+        while (j >= 0 && current[j] == ' ') {
+            j--;
+        }
+        current = current.substr(i,j-i+1);
+        //cout <<current<<endl;
+        
+        //find the position of the dot
+        int dot = -1;
+        for (int i = 0; i < current.size(); ++i) {
+            if (dot==-1 && current[i] == '.') {
+                dot = i;
+            }
+            else {
+                if(!std::isdigit(current[i])) {
+                    return false;
+                }
+            }
+        }
+        string firstStr,secStr;
+        //xxx.yyy
+        
+        firstStr = current.substr(0,dot);
+        secStr = current.substr(dot+1);//if dot+1 == string.end(), then this is empty but valid
+        if (firstStr.length()== 0 && secStr.length()==0) {
+            return false;
+        }
+        
+        return true;
+        
+    }
+};
