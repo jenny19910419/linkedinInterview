@@ -1,0 +1,102 @@
+//Recursive method: repeated computing (2^n)
+class Solution {
+private:
+    int helper(int* num, int i , int j) {
+        call_time++;
+        if (j<=i) {
+            return j-i+1;
+        }
+        if (num[i]==num[j]) {
+            return 2 + helper(num, i+1, j-1);
+        }
+        else return std::max(helper(num, i+1, j), helper(num, i,j-1));
+    }
+public:
+    int call_time = 0;
+	int maxPanlindromeSequence(int* num,int n) {
+        int len = 0;
+        if (num==NULL) {
+            return len;
+        }
+        return helper(num, 0, n-1);
+    }
+};
+
+//DP: from bottom to up:kinds of complicated
+class Solution2 {
+private:
+   public:
+    int call_time = 0;
+	int maxPanlindromeSequence(int* num,int n) {
+        call_time++;
+        if (num==NULL|| n==0) {
+            return 0;
+        }
+        vector<vector<int> > v;
+        for (int i = 0; i < n; ++i) {
+            v.push_back(vector<int>(n,0));
+        }
+        
+        for (int i = 0; i < n; ++i) {
+            v[i][i] = 1;
+        }
+        
+        for (int i = n-2; i >=0; i--) {
+            for (int j = i+1; j < n; ++j) {
+                if (num[i]==num[j]) {
+                    v[i][j] = v[i+1][j-1]+2;
+                }
+                else {
+                    v[i][j] = std::max(v[i+1][j], v[i][j-1]);
+                }
+            }
+        }
+        
+        return v[0][n-1];
+        
+    }
+};
+
+
+//DP:accoriding to layer length
+
+class Solution2 {
+public:
+    string result;
+    int call_time = 0;
+	int maxPanlindromeSequence(int* num,int n) {
+        call_time++;
+        if (num==NULL|| n==0) {
+            return 0;
+        }
+        vector<vector<int> > v;
+        string result;
+        for (int i = 0; i <= n; ++i) {
+            v.push_back(vector<int>(n,0));
+        }
+        
+        for (int i = 1; i < v.size();++i) {
+            v[i][i] = 1;
+        }
+        
+        for (int l = 2; l <= n; l++) {
+            for (int i = 1; i <= n-l+1; ++i) {
+                int j = i + l-1;
+                if (num[i-1]==num[j-1]) {
+                    v[i][j] = v[i+1][j-1] + 2;
+                    char a = num[i-1]+'0';
+                    result = a+result+a;
+                   
+                }
+                
+                else {
+                    v[i][j] = std::max(v[i+1][j], v[i][j-1]);
+                }
+                
+            }
+        }
+        return v[1][n];
+        
+    }
+};
+
