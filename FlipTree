@@ -1,0 +1,29 @@
+class Solution {
+public:
+
+    TreeNode* flipTree(TreeNode* root) {
+        if (root==NULL) {
+            return NULL;
+        }
+        
+        TreeNode* result;
+        helper(root, result);
+        return result;
+    }
+    
+    TreeNode* helper(TreeNode* root,TreeNode*& result) {
+        
+        if (root->left==NULL &&root->right==NULL) {
+            result = root;
+            return root;
+        }
+        
+        TreeNode* cur = helper(root->left,result);
+        //cout << root->val<<" "<<cur->val<<endl;
+        cur->left = root->right;
+        cur->right = root;
+        root->right = NULL;
+        
+        return root;
+    }
+};
