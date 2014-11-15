@@ -1,7 +1,7 @@
 class Solution {
 public:
     int maxSubArray(int A[], int n) {
-        int max = INT_MIN,cur_max = INT_MIN;
+        int max = INT_MIN,cur_max = 0;//this is not correct: overflow -> INT_MIN;
         for(int i = 0;i<n;++i) {
             //only two cases: with and without
             cur_max = std::max(cur_max+A[i],A[i]);
