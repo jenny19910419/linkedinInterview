@@ -1,0 +1,24 @@
+//O(n) two pointers
+class Solution {
+public:
+    int FindMinDistance(vector<string> list,string s1,string s2) {
+        int min_distance = INT_MAX;
+        int pre = 0;
+        while (pre<list.size()) {
+            if (list[pre]==s1 || list[pre]==s2) {
+                break;
+            }
+        }
+        for (int i = pre+1; i < list.size(); ++i) {
+            if ((list[i]==s1 && list[pre]==s2)||(list[i]==s2 && list[pre]==s1)) {
+                min_distance = std::min(min_distance,i-pre);
+                pre = i;
+            }
+            else {
+                pre = i;//the previous one cannot be nearer than this one
+            }
+        }
+        return min_distance;
+    }
+};
+
