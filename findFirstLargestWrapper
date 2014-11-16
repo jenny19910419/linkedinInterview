@@ -1,0 +1,22 @@
+int findLargerWithWrapper(int A[], int start, int end, int target) {
+    if (A==NULL || start>end) {
+        return -1;
+    }
+    int size = end;
+    while (start <= end) {
+        int mid = (start+end)/2;
+        if (A[mid]<= target) {
+            start = mid+1;
+        }
+        else {
+            end = mid;
+        }
+        if (start==end) {
+            if (A[start]<=target) {
+                return 0;
+            }
+            return start;
+        }
+    }
+    return start;
+}
