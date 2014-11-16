@@ -1,0 +1,8 @@
+//Find the log base 2 of an integer with the MSB N set in O(N) operations (the obvious way)
+unsigned int v; // 32-bit word to find the log base 2 of
+unsigned int r = 0; // r will be lg(v)
+
+while (v >>= 1) // unroll for more speed...
+{
+  r++;
+}
