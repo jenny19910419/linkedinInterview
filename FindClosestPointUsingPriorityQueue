@@ -1,0 +1,60 @@
+class Point {
+private:
+    int x;
+    int y;
+    double distance_From_Center;
+public:
+    Point(int a,int b) {
+        x = a;
+        y = b;
+        distance_From_Center = 0;
+    }
+    int getX() const{
+        return x;
+    }
+    int getY() const {
+        return y;
+    }
+    
+    void setDistanceFromCenter(Point& other) {
+        distance_From_Center = (x-other.x)*(x-other.x) + (y-other.y) *(y-other.y);
+        //return distance_From_Center;
+    }
+    double getDistanceFromCenter() const{
+        return distance_From_Center;
+    }
+    double getDis(Point& a, Point & b) {
+        return (a.x-b.x) * (a.x-b.x) + (a.y-b.y) * (a.y-b.y);
+    }
+    
+     bool operator<(const Point& other) const {
+         //this is the increasing order
+         return this->getDistanceFromCenter() < other.getDistanceFromCenter();
+     }
+};
+
+class Solution {
+    Point getClosestPoint(vector<Point> sets, Point center) {
+        priority_queue<Point> q;
+        
+        for (int i = 0; i < sets.size(); ++i) {
+            sets[i].setDistanceFromCenter(center);
+             q.push(sets[i]);
+        }
+        
+        return q.top();
+    }
+};
+
+/*class mycomparison
+{
+    bool reverse;
+public:
+    mycomparison(const bool& revparam=false)
+    {reverse=revparam;}
+    bool operator() (const int& lhs, const int&rhs) const
+    {
+        if (reverse) return (lhs>rhs);
+        else return (lhs<rhs);
+    }
+};*/
