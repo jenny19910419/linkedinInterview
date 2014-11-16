@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
+        vector<Interval>::iterator itr = intervals.begin();
+        vector<Interval>::iterator pre = itr;
+        
+        while(itr!=intervals.end()) {
+            if(newInterval.end < itr->start) {
+                
+                if(pre!=itr) {
+                    itr = intervals.erase(pre,itr);
+                    intervals.insert(itr,newInterval);
+                }
+                else {
+                    intervals.insert(itr,newInterval);
+                }
+                return intervals;
+            }
+            else if(newInterval.start > itr->end) {
+                itr++;
+                pre++;
+            }
+            else {
+                newInterval.start = std::min(newInterval.start,itr->start);
+                newInterval.end = std::max(newInterval.end,itr->end);
+                itr++;
+            }
+        }
+        
+        if(pre!=itr) itr = intervals.erase(pre,itr);
+        intervals.insert(intervals.end(),newInterval);
+        return intervals;
+    }
+};
