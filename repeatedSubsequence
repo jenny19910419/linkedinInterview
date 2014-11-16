@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int findRepeatedSubstring(string input, int l) {
+        if (input.size()==0 || l <=0 || input.size()<l) {
+            return -1;
+        }
+        unordered_set<string> added;
+        unordered_set<string> result;
+        for (int i = 0; i < input.size()-l; ++i) {
+            string temp = input.substr(i,l);
+            if (added.find(temp)!=added.end()) {
+                result.insert(temp);
+            }
+            else
+                added.insert(temp);
+        }
+        return (int)result.size();
+    }
+};
