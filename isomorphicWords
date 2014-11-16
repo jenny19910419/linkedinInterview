@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isIso(string s1,string s2) {
+        if (s1.size()!=s2.size()) {
+            return false;
+        }
+        unordered_map<char, char> map;
+        for (int i = 0; i < s1.size(); ++i) {
+            if (map.find(s2[i])==map.end()) {
+                map[s2[i]] = map[s1[i]];
+            }
+            else {
+                if (map[s2[i]]!=s1[i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
