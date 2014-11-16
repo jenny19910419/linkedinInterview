@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxProduct(int A[], int n) {
+        if(A == NULL || n ==0) {
+            return 0;
+        }
+        int maxProduct = A[0];
+        int max_temp = A[0];
+        int min_temp = A[0];
+        for(int i = 1; i < n;++i) {
+            int a = A[i]*max_temp;
+            int b = A[i]*min_temp;
+            max_temp = std::max(std::max(a,b),A[i]);
+            min_temp = std::min(std::min(a,b),A[i]);
+            maxProduct = std::max(maxProduct,max_temp);
+        }
+        return maxProduct;
+    }
+};
