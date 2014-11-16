@@ -1,0 +1,13 @@
+class Solution {
+public:
+    string reverseStringRecursively(string s) {
+        if (s.size()<=1) {
+            return s;
+        }
+        string result;
+        result+=reverseStringRecursively(s.substr(1));
+        result+=s[0];
+        return result;
+    }
+    
+};
