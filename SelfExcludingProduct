@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int selfExcludingProduct(vector<int> input,int k) {
+        vector<int> left;
+        vector<int> right;
+        int f1 = 1;
+        int f2 = 1;
+        for (int i = 0; i < input.size(); ++i) {
+            f1 *= input[i];
+            f2 *= input[input.size()-i-1];
+            left.push_back(f1);
+            right.push_back(f2);
+        }
+        reverse(right.begin(), right.end());
+        
+        int left_num = k==0?1:left[k-1];
+        int right_num = k==input.size()-1?1:right[k+1];
+        return left_num * right_num;
+    }
+    
+};
