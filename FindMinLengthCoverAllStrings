@@ -1,0 +1,78 @@
+We need a Trie and a HashTable, and do one time scan using sliding window (head + tail pointers) technique 
+
+1) Advance tail pointer thru the document and match any word with the help of Trie. Add a count of 1 to HashTable keyed by word. 
+2) When we matched all n words (HashTable.Size == n), we know document from head to tail contains all words, but not necessarily the shortest. 
+3) Now advance head pointer and decrease the value in HashTable when we encounter a word. Stop when the value in HashTable is 0. Now we have a shortest match between head and tail at current (tail) location. 
+4) Advance tail pointer again and stop when any word is matched. Try to advance tail pointer the same way as far as we can. Update the global tracker if new match is shorter. 
+5) Repeat until tail hit the end of document. 
+
+string GetMinimumString ( string original, string word1, string word2, string word3 )
+{
+    const char SpaceChar = ' ';
+    
+    if(original == null)
+        return null;
+    
+    List<string> words = original.Split(SpaceChar);
+    
+    Hashtable<string, int> wordList = new Hashtable<string, int>();
+    wordList.Add(word1, -1);
+    wordList.Add(word2, -1);
+    wordList.Add(word3, -1);
+    
+    int minDistance = Integer.MaxValue;
+    int minIndex = 0, maxIndex = 0;
+    
+    for(int i=0; i< words.Length; i++)
+    {
+        string w = words[i];
+        if(w == word1 || w == word2 || w ==word3)
+        {
+            wordList[w] = i;
+            if ( (w == word1 & (wordList[word2] == -1 || wordList[word3] == -1))
+            ||   (w == word2 & (wordList[word1] == -1 || wordList[word3] == -1))
+            ||   (w == word3 & (wordList[word1] == -1 || wordList[word2] == -1)) )
+                continue;
+            
+            int distance = GetMax(wordList) - GetMin(wordList);
+            if ( distance < minDistance )
+            {
+                minDistance = distance;
+                minIndex = GetMin(wordList);
+                maxIndex = i;
+            }
+            
+            if(minDistance == 2)
+                break;
+        }
+         }
+    if(maxIndex == 0)
+        return null;
+    
+    string s = "";
+    
+    for(int i = minIndex; i<= maxIndex; i++)
+        s += words[i] + SpaceChar;
+    
+    return s;
+}
+    
+    int GetMax(Hashtable<string, int> tab)
+    {
+        int max = 0;
+        foreach(Key k in tab.Keys())
+            if( tab[k] > max )
+                max = tab[k];
+        
+        return max;
+    }
+    
+    int GetMin(Hashtable<string, int> tab)
+    {
+        int min = 0;
+        foreach(Key k in tab.Keys())
+            if( tab[k] < min )
+                min = tab[k];
+        
+        return min;
+    }
