@@ -1,0 +1,45 @@
+void printVertical(int n, int k) {
+    int row_num = n/k;
+    int mod = n%k;
+    if (mod!=0) {
+        row_num++;
+    }
+    if (mod==0) {
+        for (int i = 0; i < row_num; ++i) {
+            int num = i + 1;
+            cout << num<<" ";
+            for (int j = 1; j < k; ++j) {
+                num+=row_num;
+                cout <<num<< " ";
+            }
+            cout << endl;
+            
+        }
+        return;
+    }
+    else {
+        for (int i = 0; i < row_num; ++i) {
+            int num = i+1;
+            cout << num<<" ";
+            for (int j = 1 ; j < mod; j++) {
+                num+=row_num;
+                cout << num<<" ";
+            }
+            if (i!=row_num-1) {
+                if (mod<k) {
+                    num+=row_num;
+                    cout << num<<" ";
+                    
+                }
+                for (int j = mod+1; j < k; ++j) {
+                    num += row_num-1;
+                    cout << num<<" ";
+                }
+                cout << endl;
+            }
+        }
+        
+        cout << endl;
+    }
+}
+
