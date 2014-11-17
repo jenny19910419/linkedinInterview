@@ -1,0 +1,21 @@
+class Solution {
+public:
+    const float EPS = 0.000000001;
+    int sqrt(int x) {
+        if(x==0) return x;
+        
+        float val = x;
+        float dividend = x;
+        float last;
+        do 
+        {
+            last = val;
+            val = (val + dividend/val)/2;
+        }while(abs(val-last)>EPS);
+        
+        int r = val;
+        if(r*r>x) 
+            r--;
+        return r;
+    }
+};
