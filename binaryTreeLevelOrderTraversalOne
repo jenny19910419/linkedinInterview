@@ -22,3 +22,34 @@ public:
         
     }
 };
+
+
+//Non-recursive version
+class Solution {
+public:
+    vector<vector<int> > levelOrder(TreeNode *root) {
+        vector<vector<int> > result;
+        if(root==NULL)
+            return result;
+        
+        vector<TreeNode *> cur, next;
+        cur.push_back(root);
+        while(!cur.empty()) {
+            vector<int> tmp;
+            for(int i = 0; i < cur.size();++i)
+            {
+                tmp.push_back(cur[i]->val);
+                
+                if(cur[i]->left)
+                    next.push_back(cur[i]->left);
+                if(cur[i]->right)
+                    next.push_back(cur[i]->right);
+            }
+            result.push_back(tmp);
+            cur = next;
+            next.clear();
+        }
+        
+        return result;
+    }
+};
