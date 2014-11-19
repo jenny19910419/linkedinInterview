@@ -1,0 +1,50 @@
+bool getNodePath(TreeNodeWithParent* pRoot, TreeNodeWithParent* pNode, list<TreeNodeWithParent* > & path) {
+    if (pRoot==NULL) {
+        return true;
+    }
+    path.push_back(pRoot);
+    bool found = getNodePath(pRoot->left, pNode, path);
+    if (found == false) {
+        found = getNodePath(pRoot->right, pNode, path);
+    }
+    if (found) {
+        path.pop_back();
+    }
+    
+    return found;
+}
+
+TreeNodeWithParent* GetLastCommonNode(const list<TreeNodeWithParent*> path1, const list<TreeNodeWithParent*> path2) {
+    list<TreeNodeWithParent*>::const_iterator itr1 = path1.begin();
+    list<TreeNodeWithParent*>::const_iterator itr2 = path2.begin();
+    TreeNodeWithParent* result = NULL;
+    while (itr1!=path1.end()&&itr2!=path2.end()) {
+        if(*itr1 == *itr2) {
+            result = *itr1;
+            break;
+        }
+    }
+    return result;
+}
+
+TreeNodeWithParent* GetCommonParent(TreeNodeWithParent* pRoot, TreeNodeWithParent* pNode1,TreeNodeWithParent* pNode2) {
+    if (pRoot==NULL|| pNode1 == NULL||pNode2==NULL) {
+        return NULL;
+    }
+    list<TreeNodeWithParent*> path1,path2;
+    getNodePath(pRoot,pNode1, path1);
+    getNodePath(pRoot,pNode2, path2);
+    return GetLastCommonNode(path1, path2);
+    
+}
+
+
+int main() {
+    TreeNodeWithParent* root = new TreeNodeWithParent(1,NULL);
+    TreeNodeWithParent* p1 = new TreeNodeWithParent(2,root);
+    root->left = p1;
+    TreeNodeWithParent* p2 = new TreeNodeWithParent(2,root);
+    root->right = p2;
+    TreeNodeWithParent* result =  GetCommonParent(root, p1, p2);
+    cout << result->val<<endl;
+}
