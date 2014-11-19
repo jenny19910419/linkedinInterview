@@ -12,7 +12,8 @@ public:
         for (int i = 1; i < input.size(); ++i) {
             for (int j = 0; j < i; ++j) {
                 if (input[j]>input[i]) {
-                    break;
+                    //break;
+                    continue;
                 }
                 else {
                     result[i] = std::max(result[i],result[j]+1);
